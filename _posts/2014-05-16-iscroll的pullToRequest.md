@@ -6,8 +6,9 @@ layout: post
 
 ###一、	DEMON
 
-<a href="../demon/pull/pullmod1.html">1.顶部下拉刷新,底部上拉加载</a>
-<a href="../demon/pull/pullmod2.html">2.顶部下拉刷新,底部自动加载更多</a>
+<a href="git-way.com/demon/pull/pullmod1.html">1.顶部下拉刷新,底部上拉加载</a>
+
+<a href="git-way.com/demon/pull/pullmod2.html">2.顶部下拉刷新,底部自动加载更多</a>
 ###二、	兼容性测试
  
 根据友盟统计的前十机型做了兼容测试
