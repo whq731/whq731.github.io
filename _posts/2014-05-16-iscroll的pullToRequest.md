@@ -1,7 +1,7 @@
 ---
 layout: post
 ---
-##{{ page.title }}
+#{{ page.title }}
 
 
 ###一、	DEMON
@@ -20,8 +20,10 @@ ios 和安卓4.0以上机型可以流畅体验
 在网页中模拟原生的拉动加载或刷新，都需要一个技术: 页面局部滚动。
 
 当下的移动web技术，主要使用下面两种方式实现局部区域的滚动：
-**•	基于IScroll组件，该组件内置了PullToRefresh 功能 
-**•	使用浏览器原生支持overflow: scroll，(安卓3+支持,2.x需要Js模拟)，在iOS下使用-webkit-overflow-scrolling: touch;实现惯性滚动。
+
+**基于IScroll组件，该组件内置了PullToRefresh 功能 
+
+**使用浏览器原生支持overflow: scroll，(安卓3+支持,2.x需要Js模拟)，在iOS下使用-webkit-overflow-scrolling: touch;实现惯性滚动。
 
 ###DEMON使用IScroll来实现
 **优点：
