@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<style type="text/css">
+	/*html4 reset*/
+	* { -webkit-text-size-adjust:none;-webkit-user-select:none; }
+	body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, textarea, p, blockquote, th, td {
+		margin:0;
+		padding:0; 
+	}
+	fieldset, img {	
+		border:0 none;
+	}
+	address, caption, cite, code, dfn, em, th, var, b,h1,h2,h3,h4,h5,h6 {
+		font-style:normal;
+		font-weight:normal;
+	}
+	ol, ul, li {
+		list-style-type:none
+	}
+	/*html5 reset*/
+	header, footer, section, nav, menu, details, hgroup, figure, figcaption, article, aside {
+		margin:0;
+		padding:0;
+		display:block;
+	}
+	body{ font-family:"\5FAE\8F6F\96C5\9ED1",Verdana,Arial,Helvetica,sans-serif; background:#fff;}
+	a:link,
+	a:visited,
+	a:hover,
+	a:focus {text-decoration:none;}	
+	img, input, button {
+		vertical-align: middle;
+	}
+	body {width:100%;height: 100%;}
+	html,body{height:100%; width:100%; overflow: hidden;margin:0; padding:0;}
+	.main{
+		width:100%;
+		height: 100%;
+		overflow: hidden;
+		background-color:#ff5959;
+		color: #fff;
+	}
+	.act_title {
+		width: 100%;
+		height: 120px;
+	}
+
+	.act_time span{
+		letter-spacing:3px;
+	}
+	.act_time em{
+		letter-spacing:0px;
+	}
+	.act_status{
+		width: 100%;
+		height: 71.5px;
+		padding-top: 12px;
+		background-color: #ff5959;
+		border-top: 0.5px solid #fff;
+		text-align: center;
+		-webkit-user-select: none; 
+		user-select: none;
+	}
+	.act_status p{
+		-webkit-box-sizing:border-box;
+		box-sizing:border-box;
+		width: 100%;
+		height: 25px;
+		padding: 0 15px;
+		line-height: 25px; 
+		font-size: 12px;
+		clear: both;
+	}
+	.act_status_coming{
+		width: 210px;
+		height: 40px;
+		line-height: 40px;
+		margin: auto;
+		font-size: 17px;
+	}
+	.act_status_coming::after{
+		content: "活动即将开始咯~";
+	}
+	.act_status_start{
+		width: 210px;
+		height: 39.75px;
+		line-height: 39.75px;
+		margin: auto;
+		background-color: #ffb810;
+		-webkit-box-shadow: 1px 2.5px 1px #e55050;
+		box-shadow: 1px 2.5px 1px #e55050;
+		border-radius: 6px;
+		font-size: 17px;
+	}
+	.act_status_start::after{ 
+		content: "马上报名  >>";
+	}
+	.act_status_success{
+		height: 40px;
+		line-height: 40px;
+		margin: auto;
+		font-size: 17px;
+	}
+	.act_status_success::after{
+		background: url(<?=$root_url?>/images/act_success.png) no-repeat;
+		background-size: 12px 12px;
+		background-position: -1px 5px;
+		padding-left: 12px;
+		font-size: 17px;
+		content: "恭喜您报名成功，快去选购吧~";
+	}
+	.act_status_loading{
+		background: url(<?=$root_url?>/images/act_loading.gif) no-repeat;
+		background-size: 12px 12px;
+		background-position: 64px 13px;
+		height: 40px;
+		line-height: 40px;
+		margin: auto;
+		font-size: 17px;
+	}
+	.act_status_loading::after{
+		padding-left: 12px;
+		content: "小当玩命为您加载中~";
+	}
+	.act_apply_again{
+		height: 40px;
+		line-height: 40px;
+		margin: auto;
+		font-size: 17px;
+	}
+	.act_apply_again::after{
+		content: "您已经报过名了哦~";
+	}
+	.act_status_end{
+		height: 40px;
+		line-height: 40px;
+		margin: auto;
+		font-size: 17px;
+	}
+	.act_status_end::after{
+		content: "抱歉，您来晚了，此活动已结束~";
+	}
+	.act_status_retry{
+		width: 260px;
+		height: 39.75px;
+		line-height: 39.75px;
+		margin: auto;
+		margin-right: 15px;
+	}
+	.act_status_retry a{
+		display: block;	
+	}
+	.act_status_retry::before{
+		content: "系统开小差啦，请重试~";
+	}
+	.retry{
+		display: none;
+		float: right;
+		width: 60px;
+		height: 39.75px;
+		line-height: 39.75px;
+		background-color: #ffb810;
+		border-bottom: 2.5px solid #e55050; 
+		border-radius: 6px;
+		font-size: 17px;
+	}
+	.act_rules_title{
+		-webkit-box-sizing:border-box;
+		box-sizing:border-box;
+		width: 100%;
+		height: 38px;
+		line-height: 38px;
+		padding-left: 15px;
+		background-color: #db4848;
+		font-size: 16px;
+	}
+	.act_details{
+		-webkit-box-sizing:border-box;
+		box-sizing:border-box;
+		width: 100%;
+		background-color: #ff5959;
+		padding: 12px 5px 50px 15px;
+		font-size: 12px;
+	}
+	.details_title{
+		margin-bottom: 10px;
+	}
+	.tip{
+		margin: 10px 0;
+		color: #fef407;
+	}
+	.important{
+		color: #fef407
+	}
+
+</style>
+	<div class="main">
+		<header><img class="act_title" src="images/act_img.png"></header>
+		<section class="act_status">
+			<div class="act_status_start"><a class="retry">重试</a></div>
+			<p class="act_time"><span>6月1日</span><em>00:00</em> 开始 ─ <span>6月30日</span><em>23:59</em> 结束</p>
+		</section>
+		<section class="act_rules_title">活动规则：</section>
+		<section class="act_details">
+			<div class="details_title">如何获得10元话费：</div>
+			<p>1. 点击“立即申请”,获得活动参与资格（仅限 iPhone、Android、iPad）； </p>
+			<p>2. 获得资格后，完成首次下单，订单金额（不含运费和现金券） 满100元即返10元话费。</p>
+			<p>3. 若活动期间有多笔订单，仅以首单为准。</p>
+			<div class="tip">温馨提示: </div>
+			<p>话费将于活动结束后15-30日内（确定无退货）,</p>
+			<p class="important">充值到您首笔订单的收货人手机号。若该订单发生退货，则话费不返哦~</p>
+		</section>
+
+		
+	</div>
+	
+	
+</body>
+</html>
