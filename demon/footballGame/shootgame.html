@@ -1,0 +1,769 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+    <title>Document</title>
+    <style>
+      /*html4 reset*/
+        * { -webkit-text-size-adjust:none;-webkit-user-select:none; -webkit-touch-callout:none;}
+        body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, textarea, p, blockquote, th, td {
+          margin:0;
+          padding:0; 
+        }
+        fieldset, img { 
+          border:0 none;
+        }
+        address, caption, cite, code, dfn, em, th, var, b,h1,h2,h3,h4,h5,h6 {
+          font-style:normal;
+          font-weight:normal;
+        }
+        h2{font-weight:bold;}
+        ol, ul, li {
+          list-style-type:none
+        }
+        /*html5 reset*/
+        header, footer, section, nav, menu, details, hgroup, figure, figcaption, article, aside {
+          margin:0;
+          padding:0;
+          display:block;
+        }
+        body{ font-family:"\5FAE\8F6F\96C5\9ED1",Verdana,Arial,Helvetica,sans-serif;}
+        html,body{height:100%; width:100%;margin:0; padding:0;}
+        .main{
+          width:100%;
+          height: 100%;
+
+        }
+
+        .bg{
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 100%;
+          width: 100%;
+          background-image:url(./images/shootgame/bg.png);
+          background-position: center 0;
+          background-repeat: no-repeat;
+          background-size: 100% 100%;
+        }
+        .begin{
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 100%;
+          width: 100%;
+          z-index: 800;
+          background-image:url(./images/shootgame/begin.png);
+          background-position: center 0;
+          background-repeat: no-repeat;
+          background-size: 100% 100%;
+        }
+        .gd{
+            width:100%;
+            height: 100%;
+            position: absolute;
+
+        }
+        .ball{
+            position: absolute;
+            top:74%;
+            left: 41%;
+            width:64px;
+            background-size: cover;
+            z-index: 1;
+        }
+        #keeper{
+            position: absolute;
+            top:12%;
+            left: 41%;
+            width:64px;
+            background-size: cover;
+            transition: all 0.3s linear;
+            -webkit-transition: all 0.3s linear;
+        }
+        @-webkit-keyframes shake-base { 
+          0% { -webkit-transform: translate(0px, 0px) rotate(0deg); }
+          8% { -webkit-transform: translate(-0.5px, 1.5px) rotate(0.5deg); }
+          16% { -webkit-t
+            ransform: translate(-0.5px, 1.5px) rotate(-0.5deg); }
+          24% { -webkit-transform: translate(-2.5px, -1.5px) rotate(0.5deg); }
+          32% { -webkit-transform: translate(-2.5px, -2.5px) rotate(-1.5deg); }
+          40% { -webkit-transform: translate(1.5px, 1.5px) rotate(-1.5deg); }
+          48% { -webkit-transform: translate(-2.5px, -0.5px) rotate(-0.5deg); }
+          56% { -webkit-transform: translate(1.5px, -2.5px) rotate(-0.5deg); }
+          64% { -webkit-transform: translate(0.5px, 1.5px) rotate(0.5deg); }
+          72% { -webkit-transform: translate(-2.5px, -0.5px) rotate(0.5deg); }
+          80% { -webkit-transform: translate(-0.5px, -0.5px) rotate(-1.5deg); }
+          88% { -webkit-transform: translate(-2.5px, -1.5px) rotate(-1.5deg); }
+          96% { -webkit-transform: translate(-1.5px, -2.5px) rotate(-1.5deg); }
+          100% { -webkit-transform: translate(0.5px, -0.5px) rotate(-1.5deg); }
+          }
+          
+          @-webkit-keyframes rotate {
+            0% {-webkit-transform:rotate(0deg);}
+            100% {-webkit-transform:rotate(720deg);}
+          }
+          @-webkit-keyframes keeperMove {
+            0% {left:20%;}
+            50% {left: 60%;}
+            100% {left: 20%;} 
+          }
+        .ready{
+            display: inline-block;
+            -webkit-transform-origin: center center;
+            transform-origin: center center;
+            -webkit-animation-name: shake-base;
+            animation-name: shake-base;
+            -webkit-animation-duration: 100ms;
+            animation-duration: 100ms;
+            -webkit-animation-iteration-count: infinite;
+            animation-iteration-count: infinite;
+            -webkit-animation-timing-function: ease-in-out;
+            animation-timing-function: ease-in-out;
+            -webkit-animation-delay: 0s;
+            animation-delay: 0s;
+            -webkit-animation-play-state: running;
+            animation-play-state: running;
+            }
+        .fireball{
+            width: 67px;
+            height:151px;
+        }
+        .shoot{
+            transition: top 1s ease-in,width 2s ease,left 1s ease-in;
+            -webkit-transition: top 1s ease-in,width 2s ease,left 1s ease-in;
+            top:120px;
+            width: 34px;
+            height: 76px;
+        }
+
+        .wrapper{
+          width: 95%;
+          height: 30px;
+          background: #f7f9fd;
+          border-radius: 5px;
+          position: absolute;
+          top: 60%;
+          right: -40%;
+          margin: 0 auto;
+          -webkit-transform:translate(0,0) rotate(-90Deg) scale(0.75) ;
+        }
+        .loading{
+            width: 95%;
+            height: 20px;
+            border-radius: 15px;
+            position: absolute;
+            top: 66%;
+            right: 0;
+            margin: 0 auto;
+            -webkit-transform:translate(0,0) rotate(0Deg) scale(0.75) ;
+            background-image: url(./images/shootgame/loading.png);
+            background-size: 100% 100%;
+            background-position: center 0;
+            background-repeat: no-repeat;
+
+        }
+        .loading .loader{
+            margin-top: -5px;
+            background:none;
+        }
+        .loading .inner {
+          transition: width 0.3s linear;
+          -webkit-transition: width 0.3s linear;
+          width: 0%;
+          height: 100%;
+          background: #feb812;
+          border-radius: inherit;
+          
+        }
+        
+        .wrapper:after {
+          content: "";
+          height: 100%;
+          width: 10px;
+          background: #fbfc01;
+          position: absolute;
+          right: 22px;
+          top: 0;
+        }
+
+        .loader {
+          width: 95%;
+          height: 50%;
+          position: absolute;
+          left: 7px;
+          top: 50%;
+          margin-top: -8px;
+          background: #eef3fa;
+          border-radius: inherit;
+          z-index: 100;
+            box-shadow:
+            inset 0 0 3px rgba(0,0,0,0.4),
+            inset 0 0px 6px rgba(0,0,0,0.5),
+            inset 0 0px 10px rgba(0,0,0,0.4),
+            0 0px 0 rgba(255,255,255,0.1)
+        }
+
+        .inner {
+          transition: width 0.3s linear;
+          -webkit-transition: width 0.3s linear;
+          width: 0%;
+          height: 100%;
+          background: #fe0000;
+          background: -webkit-linear-gradient(left, #fefe00,#fe0000);
+          background: linear-gradient(to right, #fefe00,#fe0000);
+          border-radius: inherit;
+        }
+        .keeperMove{
+          -webkit-animation: keeperMove 5s ease-out infinite;
+        }
+        section.tipBorder{position:absolute;display:inline-block; width:50px;height:50px;right:15px;top: 15px;z-index: 1000;}
+        section.tipBorder a#tip { position:absolute;right: 0;width:30px;height:30px;line-height:30px;font-size:18px;border-radius: 30px;text-align: center;-webkit-font-smoothing: antialiased;font-weight:bold;background-color: #0c447e;color:#fff;z-index: 1000;}
+        section.tipBorder a#tip:link,section.tipBorder a#tip:hover { position:absolute;display:block; text-decoration:none;}
+        
+        #tip_info{
+          transition: opacity 0.3s linear;
+          -webkit-transition: opacity 0.3s linear;
+          display: none;
+          opacity: 0;
+          background-color: #f0f0f0;
+          width:100%;
+          padding:10px;position:absolute;top:0;color:#232323;font-size: 14px;
+          -webkit-transform: translateZ(0);
+          -webkit-font-smoothing: antialiased;
+          -webkit-box-sizing:border-box;
+          box-sizing:border-box;
+        }
+        #tip_info.on { display: block;opacity: 1;z-index: 999;}
+        .demon{
+          position: absolute;
+          height: 568px;
+          display: none;
+          z-index: 799;
+        }
+        .demon_click{
+          display: none;
+          width: 140px;
+          height: 101px;
+          position: absolute;
+          left: 0;
+          top: 71%;
+          background-image: url(./images/shootgame/click-finger.gif);
+          background-position: center 0;
+          background-repeat: no-repeat;
+          background-size: cover;
+          -webkit-background-size: cover;
+        }
+        .demon_slip{
+          display: none;
+          width: 133px;
+          height: 160px;
+          position: absolute;
+          right: 0;
+          top: 57%;
+          z-index: 101;
+          background-image: url(./images/shootgame/slipfinger.gif);
+          background-position: center 0;
+          background-repeat: no-repeat;
+          background-size: cover;
+          -webkit-background-size: cover;
+        }
+        .again{
+          display: none;
+          position: absolute;
+          width: 100%;
+          top:9%;
+          padding: 100px 10px 50px 10px;
+          color: #f38708;
+          font-size: 16px;
+          font-weight: bold;
+          text-align: center;
+          background-image: url(./images/shootgame/fail.png);
+          background-position: center 0;
+          background-repeat: no-repeat;
+          background-size: 100% 100%;
+          -webkit-box-sizing:border-box;
+          box-sizing:border-box;
+          z-index:998;
+        }
+        #againMsg{
+          display: block;
+          padding: 0 15px;
+          font-weight: bold;
+          line-height: 24px;
+          margin-bottom: 40px;
+        }
+        #playAgain{
+          display: inline-block;
+          margin: 0 auto;
+          width: 145px;
+          height: 50px;
+          background-image: url(./images/shootgame/again_small.png);
+          background-position: center 0;
+          background-repeat: no-repeat;
+          background-size: cover;
+          -webkit-background-size: cover;
+        }
+        #quit{
+          display: inline-block;
+          margin: 0 auto;
+          width: 145px;
+          height: 50px;
+          background-image: url(./images/shootgame/quit.png);
+          background-position: center 0;
+          background-repeat: no-repeat;
+          background-size: cover;
+          -webkit-background-size: cover;
+        }
+        .goal_gift{
+          display: none;
+          position: absolute;
+          width: 100%;
+          top:9%;
+          left:0;
+          padding: 50px 20px 40px 20px;
+          color: #f38708;
+          font-size: 14px;
+          font-weight: bold;
+          text-align: center;
+          -webkit-box-sizing:border-box;
+          box-sizing:border-box;
+          background-image: url(./images/shootgame/goal_gift.png);
+          background-position: center 0;
+          background-repeat: no-repeat;
+          background-size: 100% 95%;
+          z-index: 998;
+        }
+        #gift_value{
+            position: relative;
+            top:50%;
+            font-size: 40px;
+            font-weight:bold;
+            color: #fff;
+        }
+        @media only screen and (min-width: 480px) {
+            #playAgain{margin-left: 5%;}
+            #quit{margin-right: 5%;}
+        }
+        #giftMsg{
+            margin-top: 10px;
+        }
+        .gift{
+          width: 134px;
+          height: 134px;
+          margin: 10px auto 10px;
+          background-image: url(./images/shootgame/gift.png);
+          background-position: center 0;
+          background-repeat: no-repeat;
+          background-size: 100% 100%;
+        }
+        #get_gift{
+          width: 180px;
+          height: 50px;
+          margin: 0 auto;
+          background-image: url(./images/shootgame/get_gift.png);
+          background-position: center 0;
+          background-repeat: no-repeat;
+          background-size: cover;
+          -webkit-background-size: cover;
+        }
+        .goal_no_gift{
+          display: none;
+          position: absolute;
+          width: 100%;
+          top:9%;
+          left:0;
+          padding: 50px 20px 40px 20px;
+          color: #f38708;
+          font-size: 16px;
+          font-weight: bold;
+          text-align: center;
+          -webkit-box-sizing:border-box;
+          box-sizing:border-box;
+          background-image: url(./images/shootgame/goal_no_gift.png);
+          background-position: center 0;
+          background-repeat: no-repeat;
+          background-size: 100% 100%;
+          z-index:998;
+        }
+        .goal_no_gift h2{
+            margin-top:15px;
+            margin-bottom: 45px;
+        }
+        .goal_no_gift p{
+            line-height: 24px;
+        }
+        .again p{
+            line-height: 24px;
+        }
+        .playAgain{
+          width: 180px;
+          height: 50px;
+          margin:35px auto 0;
+          background-image: url(./images/shootgame/again_big.png);
+          background-position: center 0;
+          background-repeat: no-repeat;
+          background-size: cover;
+          -webkit-background-size: cover;
+        }
+        .begin_button{
+          display: none;
+          position: absolute;
+          width:60%;
+          height: 55px;
+          left: 20%;
+          top:56%;
+          color: #fff;
+          font-weight: bold;
+          font-size: 24px;
+          text-align: center;
+          background-image: url(./images/shootgame/button.png);
+          background-position: center 0;
+          background-repeat: no-repeat;
+          background-size: 100% 100%;
+        }
+        .ballrotate{
+            -webkit-animation: rotate 2s ease-in infinite;
+        }
+        .wrap{margin:23px 20px 0 20px;}
+        .wrap h1{color:#ff7d00;font-size:14px;font-weight:normal;margin-bottom:33px;}
+        .wrap p{font-size:12px;line-height:18px;color:black;margin-bottom:20px;}
+        .wrap p.mb0{margin-bottom:0;}
+        .wrap p.detail{text-indent:2em;}
+        .wrap em{font-style:normal;display:inline-block;width:150px;text-indent:0;}
+    </style>
+    <script  type="text/javascript" src="./js/zepto-touch.min.js"></script>
+    <script type="text/javascript">
+    //将get中去掉action和timecode
+    var Football = function(){
+        this.apply_id = 0;
+        this.captcha = 0;
+    }
+
+    //准备ajax请求时候需要的数据
+    Football.prototype.prepareRequest = function(data){
+        //直接将从客户端获得的，去掉了action和time_code的GET参数与接口参数合并
+        var ajData = _.extend(data,$_GET)
+        if(ajData.action && cfg.actionCodes[ajData.action]) {
+            ajData.time_code = cfg.actionCodes[ajData.action];
+        }
+        return ajData;
+    }
+
+    Football.prototype.getResult = function(){
+        var requestData = {action: 'football_draw'};
+        var param = this.prepareRequest(requestData);
+        $.ajax({
+            url: cfg.mapi_url,
+            type: "GET",
+            data: param,
+            dataType: "json",
+            timeout:5000,
+            success: function(response){
+                //报错处理
+                if(!response || response.errorCode!=0) {
+                    //错误处理
+                    alert(response.errorMsg);
+                    return;
+                }
+                //没进球处理
+                if(response.prize_goal !== 'goal_in') {
+                    $(".again").show();
+                   
+                } else if(response.prize_coupon != 'coupon_yes') {
+                    //进球了但是没礼券处理
+                    $(".goal_no_gift").show();
+                } else {
+                    //中礼券处理,将奖券id存下来
+                    this.apply_id = response.apply_id;
+                    this.captcha = response.captcha;
+                    //礼券名称
+                    $(".goal_gift").show();
+                    $("#giftMsg").text(response.title);
+                    $("#gift_value").text(parseInt(response.money));
+                }
+            },
+            error:function(response){
+                $(".again").show();
+            }
+        });
+    }
+
+    Football.prototype.bindeCoupon = function(){
+        if(!window.apply_id || !window.captcha) {
+            alert('礼券数据错误');
+            return;
+        }
+        var requestData = {action: 'football_bind_coupon', apply_id: window.apply_id, captcha: window.captcha};
+        var param = this.prepareRequest(requestData);
+
+        $.ajax({
+            url: cfg.mapi_url,
+            type: "GET",
+            data: param,
+            dataType: "json",
+            success: function(response){
+                if(response.errorCode!=0) {
+                    //错误处理
+                    if(response.errorCode==96) {
+                        location.href = 'login://';
+                    } else {
+                        alert(response.errorMsg);
+                        return;
+                    }
+                } else {
+                    playAgain();
+                    $(".goal_gift").hide();
+                    // 我的礼券领取
+                    location.href = 'coupon://';
+                }
+            }
+        });
+
+    }
+    function setCookie(name,value){
+        document.cookie = document.cookie+";" + name + "="+ escape (value) + ";";
+    }
+
+    //读取cookies
+    function getCookie(name)
+    {
+        var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+     
+        if(arr=document.cookie.match(reg))
+     
+            return (arr[2]);
+        else
+            return null;
+    }
+    var energy = 0;
+    var therod = 100;
+    var loadProgress = 0;
+    var played = getCookie("played") || localStorage.getItem("played");
+    function loadingbar(){
+        // 加载条增加一个进度单位百分比
+        loadProgress += (100/16);
+        // iPhone ipad 无法预加载音频 需要强制增加一个进度单位
+        if(loadProgress>=93 && (navigator.appVersion.indexOf("iPhone")>-1 || navigator.appVersion.indexOf("iPad")>-1)){
+            loadProgress += (100/16);
+        }
+        if(loadProgress<=100){
+            $("#loadingbar").width(loadProgress+"%");
+        }
+        if(loadProgress >=100){
+            window.football = new Football;
+            // 点击开始播放背景音乐
+            $(".begin_button")[0].addEventListener('touchstart', function (e) { 
+                     window.bgAudio.play()
+                 }, false);
+            $(".loading").hide();
+            $(".begin_button").show();
+            $(".begin_button").tap(function(){
+                 $(".begin_button").off('tap');
+                 // 加载游戏界面
+                 var playGround="<img id='keeper' src='./images/shootgame/keeper.png'><img id='ball' src='./images/shootgame/ball.png' class='ball'><div class='demon_click'></div><div class='demon_arrow'></div><div class='demon_slip'></div><div class='wrapper'><div class='loader'><div class='inner'></div></div></div>";
+                 $("#begin").remove();
+                 $(".begin").html(playGround);
+                 $(".begin")[0].className="bg";
+                 // 启动游戏
+                 playGame();
+                 // 除活动规则页外禁止上划
+                $('body')[0].addEventListener('touchmove', function (e) { 
+                    if($(e.target.offsetParent)[0].id!="tip_info"){
+                        e.preventDefault();
+                    }
+                 }, false);
+            });
+        }
+    }
+
+    function loading(){
+        // 活动规则与关闭
+        $(".tipBorder").tap(function(){
+                if($("#tip").text()=="i"){
+                    $("#tip").text("X");
+                } else{
+                    $("#tip").text("i");
+                }
+              $("#tip_info").toggleClass("on");
+            });
+      // 预加载音频 及图像
+      window.bgAudio = new Audio();
+      window.bgAudio.src="./images/shootgame/wrto.mp3";
+      window.bgAudio.load();
+      window.bgAudio.addEventListener("canplaythrough", function () {
+                loadingbar();
+            }, false);
+      var img1 = new Image();
+      var img2 = new Image();
+      var img3 = new Image();
+      var img4 = new Image();
+      var img5 = new Image();
+      var img6 = new Image();
+      var img7 = new Image();
+      var img8 = new Image();
+      var img9 = new Image();
+      var img10 = new Image();
+      var img11 = new Image();
+      var img12 = new Image();
+      var img13 = new Image();
+      var img14 = new Image();
+      var img15 = new Image();
+      var img16 = new Image();
+
+      img1.src='./images/shootgame/football-roll-red-fire.gif';
+      img2.src='./images/shootgame/bg.png';
+      img3.src='./images/shootgame/slipfinger.gif';
+      img4.src='./images/shootgame/goal_gift.png';
+      img5.src='./images/shootgame/click-finger.gif';
+      img6.src='./images/shootgame/goal_no_gift.png';
+      img7.src='./images/shootgame/get_gift.png';
+      img8.src='./images/shootgame/football-roll-red.gif';
+      img9.src='./images/shootgame/again_small.png';
+      img10.src='./images/shootgame/again_big.png';
+      img11.src='./images/shootgame/quit.png';
+      img12.src='./images/shootgame/football-roll.gif';
+      img13.src='./images/shootgame/fail.png';
+      img14.src='./images/shootgame/keeper.png';
+      img15.src='./images/shootgame/ball.png';
+
+      img1.onload=function(){loadingbar();};
+      img2.onload=function(){loadingbar();};
+      img3.onload=function(){loadingbar();};
+      img4.onload=function(){loadingbar();};
+      img5.onload=function(){loadingbar();};
+      img6.onload=function(){loadingbar();};
+      img7.onload=function(){loadingbar();};
+      img8.onload=function(){loadingbar();};
+      img9.onload=function(){loadingbar();};
+      img10.onload=function(){loadingbar();};
+      img11.onload=function(){loadingbar();};
+      img12.onload=function(){loadingbar();};
+      img13.onload=function(){loadingbar();};
+      img14.onload=function(){loadingbar();};
+      img15.onload=function(){loadingbar();};
+    }
+    function playGame(){
+        $("#keeper").addClass("keeperMove");
+        if(!played){
+            $(".demon_click").show();
+        }
+        var ball = $("#ball");
+        ball.tap(function () {
+            energy+=6;
+            // 能力槽增减计时器 球开始滚
+            if (typeof timer == "undefined" || timer == 0) {
+                ball.attr("src","./images/shootgame/football-roll.gif").addClass("ballrotate");
+                timer= setInterval(function(){
+                    if(energy>0){
+                        energy-=5;
+                        $(".inner").css("width",energy/therod*100+"%");
+                    }
+                },300);
+            }
+            // if(energy <= therod){
+            //     $(".inner").width(energy/therod*100+"%");
+            // }
+            if (energy >= therod) {
+                ball.off("tap").addClass("ready");
+                if(!played){
+                  $(".demon_click").hide();
+                  $(".demon_slip").show();
+                }
+                clearInterval(timer);
+                timer=0;
+                $(".inner").width("100%");
+                ball.attr("src","./images/shootgame/football-roll-red.gif").removeClass("ballrotate");;
+                // alert("能量满了，上滑就射");
+                $("body").swipeUp(function(){
+                    if(!played){
+                      $(".demon_slip").hide();
+                    }
+                    // 变火球
+                    ball.removeClass("ready").attr("src","./images/shootgame/football-roll-red-fire.gif").addClass("fireball");
+                    ball[0].onload = function(){
+                        ball.addClass("shoot");
+                        ball.css("left",Math.ceil(Math.random()*60)+15+"%");
+                         ball[0].onload="";
+                    };
+                    
+                    // 已经引导过 优先使用localStorage记住
+                    if(played!=1){
+                        played=1;
+                        if(localStorage){
+                            localStorage.setItem("played",played);
+                        }else{
+                            setCookie("played",played);
+                        }
+                    }
+                    setTimeout(function(){
+                        window.football.getResult();
+                    },1000);
+                    $("body").off("swipeUp");
+                });
+            } 
+        });
+    }
+    function getGift(){
+      window.football.bindeCoupon();
+    }
+    function playAgain(){
+      energy=0;
+      $(".inner").width("0%");
+      var ball = $("#ball");
+      ball.css("left","");
+      ball[0].className = "ball";
+      ball[0].src = "./images/shootgame/ball.png";
+      $(event.target).parent().hide();
+      playGame();
+      $("#keeper").addClass("keeperMove");
+    }
+    function quit(){
+      location.href="index://";
+    }
+    </script>   
+</head>
+<body>
+<audio preload="auto">
+    <source src="./images/shootgame/wrto.mp3" type="audio/mpeg" />
+</audio>
+    <div id="tip_info">       
+    <section class="wrap">
+          <h1>“世界杯点球大战”游戏规则说明：</h1>
+          <p>1. 即日起至7月15日24:00，凡在当当购物客户端玩“世界杯点球大战”，射中球门就有机会获得10元或5元现金券哦（可多次尝试射门，但每台移动终端每天最多获得1张券）！获得现金券的用户点击领取后，该券将自动绑定到用户账户；</p>
+          <p>2. 现金券使用有效期：6月19日0:00——7月20日24:00，限购买当当自营的实物商品（虚拟商品不适用，如：话费、彩票等），每单只限使用1张，不可提现，更多细节请见<a href="cms://page_id=36632/">礼券使用规则</a></p>
+          <p class="mb0">3. 在世界杯淘汰赛阶段，还将从所有玩过游戏的用户中抽奖，被抽中的用户将获得精美足球或足球队服作为奖品（队服或足球随机发出），中奖名单将分别在2014世界杯16强、8强、4强、冠军产生的3日内公布在游戏页面，奖品将由当当网于7月20日（含）之前发出，抽奖数量如下：</p>
+          <p class="detail mb0"><em>16强产生3日内</em>2名</p>
+          <p class="detail mb0"><em>8强产生3日内</em>4名</p>
+          <p class="detail mb0"><em>4强产生3日内</em>8名</p>
+          <p class="detail"><em>冠军产生3日内</em>16名</p>
+          <p>4. 在法律允许的范围内，本次活动最终解释权归当当网所有，如有疑问请咨询当当网客服热线：<a href="tel:400-106-6666">400-106-6666</a>。</p>
+      </section>
+    </div>
+    <div class="main" >
+      <section class="tipBorder">
+          <a id="tip" href="javascript:;">i</a>
+      </section>
+      <div class="begin"><a class="begin_button"></a><div class='loading'><div class='loader'><div id="loadingbar" class='inner'></div></div></div></div><img id="begin" src="./images/shootgame/begin.png" style="display:none" class="gd" onload="loading()"></div>
+      <div class="goal_gift">
+      <h2>恭喜进球了~~</h2>
+      <p id="giftMsg"></p>
+        <div class="gift"><em id="gift_value">10</em></div>
+        <div id="get_gift" onclick="getGift()"></div>
+        </div>
+      <div class="goal_no_gift">
+        <h2>GOAL!GOAL!GOAL!~</h2>
+        <p>您的射门技术和梅西一样碉堡了！</p>
+        <p>继续努力，阿根廷队服等着您呢！</p>
+        <div class="playAgain" onclick="playAgain()"></div>
+      </div>
+      <div class="again">
+        <p>太可惜了！射门被墨西哥钢门挡出了...</p>
+        <p id="againMsg">继续努力，世界杯正版足球等着您！</p>
+        <div id="playAgain" onclick="playAgain()"></div>
+        <div id="quit" onclick="quit()"></div>
+      </div>
+</div>
+</body>
+</html>
