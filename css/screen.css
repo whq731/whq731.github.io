@@ -12,12 +12,13 @@
 }
 
 html, body {
+  width: 100%;
   height: 100%;
 }
 
 body {
   background-color: white;
-  font: 13.34px helvetica, arial, clean, sans-serif;
+  font: 16px helvetica, arial, clean, sans-serif;
   *font-size: small;
   text-align: center;
 }
