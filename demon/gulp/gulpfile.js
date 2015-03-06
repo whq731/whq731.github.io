@@ -44,7 +44,7 @@ gulp.task('images', function () {
 
 // 监视文件任务
 gulp.task('watch', function() {
-    gulp.watch('./hosts/api/js/', ['scripts']);
+    gulp.watch('./hosts/api/js/*.js', ['scripts']);
     gulp.watch('./hosts/api/images/checkout/', ['images']);
     gulp.watch('./hosts/api/css/*.css', ['css']);
 });
