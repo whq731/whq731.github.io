@@ -50,4 +50,4 @@ gulp.task('watch', function() {
 });
 
 // 默认任务
-gulp.task('default', ['watch']);
+gulp.task('default', ['scripts', 'images','css', 'watch']);
