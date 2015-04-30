@@ -74,7 +74,7 @@
                 that.appDownload(window.landingAppUrlConfig);
             });
             $('#closeLanding').on('click',function(){
-                $('.landing').hide();
+                $('.landing').remove();
                 that.tempClose('landing');
             });
             // 首页内下载
@@ -82,7 +82,7 @@
                 that.appDownload(window.appUrlConfig);
             });
             $('.close-app-download').on('click', function(){
-                $(this).parent().hide();
+                $(this).parent().remove();
                 that.tempClose($(this).parent().data("pos"));
 
             });
@@ -261,7 +261,7 @@
         },
         recPrdsScroller : function(){
             var that = this;
-            window.rec_prds_scroller = new IScroll('.rec-prds', {scrollX: true,scrollY: false,snap: false, momentum: false,deceleration: 0.01, click: false,eventPassthrough: true,preventDefault:true,useTransition:false,disableMouse: true, disablePointer: true});
+            window.rec_prds_scroller = new IScroll('.rec-prds', {scrollX: true,scrollY: false,snap: false, momentum: true,deceleration: 0.005, click: false,eventPassthrough: true,preventDefault:true,useTransition:false,disableMouse: true, disablePointer: true});
             rec_prds_scroller.on('scrollEnd', function(){
                 // 向左滑停止时 加载下一页
                 rec_prds.currentPage = Math.ceil(this.x / -rec_prds.pageWidth) + 1;
@@ -274,18 +274,32 @@
                 //}
                 // 向右滑判断是否有已销毁 有则加载
                 if(this.x > this.startX ){
+                    // 惯性滑动 当前页可能是销毁页 判断并加载
+                    if($('.rec-prds li[data-page-nubmer="' + rec_prds.currentPage + '"]').data('destroyed') == true){
+                        that.loadRecPrds(rec_prds.currentPage, rec_prds.pageSize, 'destroyed');
+                    }
                     // 判断不存在前一页时 强制加载
                     if(rec_prds.currentPage != 1 && $('[data-page-nubmer="'+(rec_prds.currentPage - 1) + '"]').length == 0){
-                        that.loadRecPrds(rec_prds.currentPage -1 , rec_prds.pageSize, 'insert');
+                        that.loadRecPrds(rec_prds.currentPage -1 , rec_prds.pageSize, 'destroyed');
                     }
-                    // 前一页为销毁页面 则加载
+                    // 前三页为销毁页面 则加载
                     if($('.rec-prds li[data-page-nubmer="' + (rec_prds.currentPage - 1) + '"]').data('destroyed') == true){
                         that.loadRecPrds(rec_prds.currentPage - 1, rec_prds.pageSize, 'destroyed');
+                    }
+                    if($('.rec-prds li[data-page-nubmer="' + (rec_prds.currentPage - 2) + '"]').data('destroyed') == true){
+                        that.loadRecPrds(rec_prds.currentPage - 2, rec_prds.pageSize,  'destroyed');
+                    }
+                    if($('.rec-prds li[data-page-nubmer="' + (rec_prds.currentPage - 3) + '"]').data('destroyed') == true){
+                        that.loadRecPrds(rec_prds.currentPage - 3, rec_prds.pageSize,  'destroyed');
                     }
                 } else {
                     // 左滑加载下一页
                     if($('[data-page-nubmer="'+(rec_prds.currentPage + 1) + '"]').length == 0){
                         that.moreRecPrds(rec_prds.currentPage + 1, rec_prds.pageSize);
+                    }
+                    // 惯性滑动 当前页可能是销毁页 判断并加载
+                    if($('.rec-prds li[data-page-nubmer="' + rec_prds.currentPage + '"]').data('destroyed') == true){
+                        that.loadRecPrds(rec_prds.currentPage, rec_prds.pageSize, 'destroyed');
                     }
                     // 防止左滑速度过快 scrollEnd惯性移动 前一页未加载 判断不存在前一页时 强制加载
                     if(rec_prds.currentPage != 1 && $('[data-page-nubmer="'+(rec_prds.currentPage - 1) + '"]').length == 0){
