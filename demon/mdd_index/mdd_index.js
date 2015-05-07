@@ -188,7 +188,7 @@
         },
         suggestInit : function(){
             this.suggest = new Suggest({
-                ajaxUrl : 'h5ajax.php',
+                ajaxUrl : index_url + 'h5ajax.php',
                 defaultVal : "尾品汇",
                 formEl : "#index_search_form",
                 wrapEl : ".search_list"
@@ -319,7 +319,7 @@
             var tempHtml = "";
             $.ajax({
                 type: 'POST',
-                url: "h5ajax.php",
+                url: index_url + "h5ajax.php",
                 data: {
                     action: 'ad_cpc',
                     page: pageNum,
@@ -391,16 +391,31 @@
             str = "MDD_temp_close_"+ name +"=1; expires=" + date.toGMTString();
             // console.log(str);
             document.cookie = str;
+        },
+        fontSizeInit:function(){
+            var docEl = document.documentElement,
+                clientWidth = docEl.clientWidth;
+            if (!clientWidth) return;
+            var ratio = clientWidth / 320;
+            ratio>2 && (ratio = 2);
+            docEl.style.fontSize = 20 * ratio + 'px';
         }
     }
     $(document).ready(function(){
-        var docEl = document.documentElement,
-            clientWidth = docEl.clientWidth;
-        if (!clientWidth) return;
-        docEl.style.fontSize = 20 * (clientWidth / 320) + 'px';
+        mdd_index.fontSizeInit();
         FastClick.attach(document.body);
         mdd_index.init();
+        //空搜索默认使用关键字
+        window.submit_search = function(){
+            if($('#keyword').val() == ''){
+                $('#keyword').val('尾品汇');
+            }
+            return true;
+        }
     })
+    window.onresize = function(){
+        mdd_index.fontSizeInit();
+    }
     window.onload = function(){
         // onlaod图片完全时 
         // 顶部轮播初始化
